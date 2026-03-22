@@ -1,4 +1,5 @@
 ---
+const base = import.meta.env.BASE_URL;
 const navLinks = [
   { href: '#accueil', label: 'Accueil' },
   { href: '#services', label: 'Services' },
@@ -9,7 +10,7 @@ const navLinks = [
 
 <nav class="navbar" id="navbar">
   <a href="#" class="logo">
-    <img src="/assets/logo-white.png" alt="Ruggiero Construction & Rénovation">
+    <img src={`${base}assets/logo-white.png`} alt="Ruggiero Construction & Rénovation">
   </a>
   <ul class="nav-links">
     {navLinks.map(link => (

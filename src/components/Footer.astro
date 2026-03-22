@@ -1,4 +1,5 @@
 ---
+const base = import.meta.env.BASE_URL;
 const footerLinks = [
   { href: '#accueil', label: 'Accueil' },
   { href: '#services', label: 'Services' },
@@ -11,7 +12,7 @@ const footerLinks = [
   <div class="footer-inner">
     <div class="footer-top">
       <a href="#" class="logo">
-        <img src="/assets/logo-white.png" alt="Ruggiero Construction & Rénovation">
+        <img src={`${base}assets/logo-white.png`} alt="Ruggiero Construction & Rénovation">
       </a>
       <ul class="footer-nav">
         {footerLinks.map(link => (
