@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://vincenzor.github.io',
-  base: '/ruggiero-construction/',
+  site: 'https://ruggiero-construction.be',
+  integrations: [sitemap()],
 });

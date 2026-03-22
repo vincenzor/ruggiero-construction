@@ -2,9 +2,15 @@
 interface Props {
   title: string;
   description: string;
+  keywords?: string;
+  ogImage?: string;
 }
 
-const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const siteUrl = import.meta.env.SITE;
+const { title, description, keywords, ogImage } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
+const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).href : new URL(`${base}assets/hero.jpg`, siteUrl).href;
 ---
 
 <!DOCTYPE html>
@@ -14,10 +20,101 @@ const { title, description } = Astro.props;
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content={description}>
-  <meta name="author" content="Ruggiero Construction">
+  {keywords && <meta name="keywords" content={keywords}>}
+  <meta name="author" content="Ruggiero Construction et Rénovation SRL">
+  <meta name="geo.region" content="BE-WNA">
+  <meta name="geo.placename" content="Andenne">
+  <meta name="geo.position" content="50.4896;5.0988">
+  <meta name="ICBM" content="50.4896, 5.0988">
+  <link rel="canonical" href={canonicalUrl}>
+  <link rel="alternate" hreflang="fr" href={canonicalUrl}>
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
+  <meta property="og:url" content={canonicalUrl}>
+  <meta property="og:image" content={ogImageUrl}>
+  <meta property="og:locale" content="fr_BE">
+  <meta property="og:site_name" content="Ruggiero Construction & Rénovation">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={title}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImageUrl}>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HomeAndConstructionBusiness",
+    "name": "Ruggiero Construction et Rénovation SPRL",
+    "description": description,
+    "url": canonicalUrl,
+    "image": ogImageUrl,
+    "telephone": "",
+    "email": "contact@ruggiero-construction.be",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rue de Rouvroy 287e",
+      "addressLocality": "Andenne",
+      "addressRegion": "Namur",
+      "postalCode": "5300",
+      "addressCountry": "BE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 50.4896,
+      "longitude": 5.0988
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Andenne" },
+      { "@type": "City", "name": "Namur" },
+      { "@type": "City", "name": "Liège" },
+      { "@type": "City", "name": "Huy" },
+      { "@type": "City", "name": "Ciney" },
+      { "@type": "AdministrativeArea", "name": "Province de Namur" },
+      { "@type": "AdministrativeArea", "name": "Wallonie" }
+    ],
+    "sameAs": [
+      "https://www.facebook.com/RuggieroConstruction/"
+    ],
+    "foundingDate": "2006",
+    "vatID": "BE0686.701.503",
+    "priceRange": "€€",
+    "openingHours": "Mo-Fr 07:00-18:00",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Services de construction",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Construction traditionnelle",
+            "description": "Construction de gros œuvre, habitations clé sur porte en maçonnerie traditionnelle"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Rénovation",
+            "description": "Agrandissement, rénovation complète de granges et fermettes, isolation"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Terrasses",
+            "description": "Terrasses en bois, pierre, carrelage ou béton"
+          }
+        }
+      ]
+    }
+  })} />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">

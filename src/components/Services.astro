@@ -3,32 +3,32 @@ const base = import.meta.env.BASE_URL;
 const services = [
   {
     image: `${base}assets/service-construction.jpg`,
-    alt: 'Construction traditionnelle',
+    alt: 'Construction traditionnelle en maçonnerie à Namur — Ruggiero Construction',
     icon: '<rect x="1" y="4" width="22" height="5"/><line x1="12" y1="4" x2="12" y2="9"/><rect x="1" y="9" width="22" height="5"/><line x1="7" y1="9" x2="7" y2="14"/><line x1="17" y1="9" x2="17" y2="14"/><rect x="1" y="14" width="22" height="5"/><line x1="12" y1="14" x2="12" y2="19"/>',
     title: 'Construction traditionnelle',
-    description: "Construction de gros œuvre fermés ou d'habitations clé sur porte en maçonnerie traditionnelle, des fondations jusqu'au rejointoiement.",
+    description: "Construction de gros œuvre fermé ou d'habitations clé sur porte en maçonnerie traditionnelle, des fondations jusqu'au rejointoiement. Votre constructeur de confiance à Namur.",
   },
   {
     image: `${base}assets/service-renovation.jpg`,
-    alt: 'Rénovation',
+    alt: 'Rénovation de maison et grange en province de Namur',
     icon: '<rect x="2" y="3" width="14" height="5" rx="1"/><path d="M18 5h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-1"/><path d="M10 8v4"/><rect x="8" y="12" width="4" height="8" rx="1"/>',
     title: 'Rénovation',
-    description: "Agrandissement, rénovation complète de granges et fermettes, isolation. Notre expérience et savoir-faire à votre service.",
+    description: "Agrandissement, rénovation complète de granges et fermettes, isolation. Une entreprise de rénovation avec plus de 20 ans d'expérience en Wallonie.",
   },
   {
     image: `${base}assets/service-terrasses.jpg`,
-    alt: 'Terrasses',
+    alt: 'Terrasses en bois et pierre en Wallonie',
     icon: '<rect x="3" y="3" width="18" height="18" rx="1"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>',
     title: 'Terrasses',
-    description: "En bois, en pierre, en carrelage ou en béton — la terrasse est l'extension naturelle de votre habitation sur l'extérieur.",
+    description: "En bois, en pierre, en carrelage ou en béton — la terrasse est l'extension naturelle de votre habitation. Réalisation de terrasses en province de Namur et alentours.",
   },
 ];
 ---
 
 <section class="section services" id="services">
-  <div class="section-label">Nos services</div>
-  <h2 class="section-title">Un savoir-faire complet</h2>
-  <p class="section-subtitle">Petite société familiale privilégiant le travail de qualité. L'ensemble des travaux sont réalisés par le patron, Monsieur Ruggiero.</p>
+  <div class="section-label">Nos services de construction</div>
+  <h2 class="section-title">Entrepreneur en construction à Andenne — Un savoir-faire complet</h2>
+  <p class="section-subtitle">Petite société familiale spécialisée en maçonnerie traditionnelle et rénovation en province de Namur. L'ensemble des travaux sont réalisés par le patron, Monsieur Ruggiero.</p>
   <div class="services-grid">
     {services.map(service => (
       <div class="service-card">
