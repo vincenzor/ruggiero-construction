@@ -1,0 +1,291 @@
+<section class="section contact" id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Parlons de votre projet</h2>
+  <p class="section-subtitle">Contactez-nous pour un devis gratuit et sans engagement.</p>
+  <div class="contact-layout">
+    <div class="contact-info">
+      <h3>Ruggiero Construction et Rénovation SPRL</h3>
+      <div class="info-item">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+        </div>
+        <div>
+          <div class="label">Adresse</div>
+          <div class="value">Rue de Rouvroy 287e<br>5300 Andenne (Bonneville)</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        </div>
+        <div>
+          <div class="label">Email</div>
+          <div class="value"><a href="mailto:contact@ruggiero-construction.be">contact@ruggiero-construction.be</a></div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="icon-circle">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+        </div>
+        <div>
+          <div class="label">TVA</div>
+          <div class="value">BE0686.701.503</div>
+        </div>
+      </div>
+      <div class="stats-bar">
+        <div class="stat">
+          <div class="stat-value">20+</div>
+          <div class="stat-label">Années d'expérience</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Artisanal &amp; local</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-card">
+      <form id="contactForm" action="https://formsubmit.co/contact@ruggiero-construction.be" method="POST">
+        <input type="hidden" name="_subject" value="Nouvelle demande de devis — Ruggiero Construction">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="">
+        <input type="text" name="_honey" style="display:none">
+        <div class="form-group">
+          <label for="name">Votre nom</label>
+          <input type="text" id="name" name="name" placeholder="Jean Dupont" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Votre email</label>
+          <input type="email" id="email" name="email" placeholder="jean@exemple.be" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Téléphone</label>
+          <input type="tel" id="phone" name="phone" placeholder="+32 470 12 34 56">
+        </div>
+        <div class="form-group">
+          <label for="location">Localisation du chantier</label>
+          <input type="text" id="location" name="location" placeholder="Andenne, Namur, ..." required>
+        </div>
+        <div class="form-group">
+          <label for="message">Votre message</label>
+          <textarea id="message" name="message" placeholder="Décrivez votre projet..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Envoyer ma demande</button>
+        <p class="form-success" id="formSuccess">Merci ! Votre demande a bien été envoyée.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement;
+  const successMsg = document.getElementById('formSuccess');
+  const submitBtn = form?.querySelector('.btn-submit') as HTMLButtonElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Envoi en cours...';
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' },
+      });
+
+      if (response.ok) {
+        form.reset();
+        if (successMsg) successMsg.style.display = 'block';
+        setTimeout(() => {
+          if (successMsg) successMsg.style.display = 'none';
+        }, 8000);
+      } else {
+        alert('Une erreur est survenue. Veuillez réessayer ou nous contacter par email.');
+      }
+    } catch {
+      alert('Une erreur est survenue. Veuillez réessayer ou nous contacter par email.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Envoyer ma demande';
+    }
+  });
+</script>
+
+<style>
+  .contact {
+    background: var(--bg-light);
+  }
+
+  .contact-layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .contact-info h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+
+  .info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-item .icon-circle {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    background: rgba(74, 80, 120, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .info-item .icon-circle svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--primary);
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .info-item .label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+
+  .info-item .value {
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+
+  .info-item a {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .info-item a:hover {
+    text-decoration: underline;
+  }
+
+  .stats-bar {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2rem;
+    padding: 1.5rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--white);
+  }
+
+  .stat .stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+  }
+
+  .stat .stat-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+
+  .contact-form-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: var(--bg-light);
+    transition: border-color 0.2s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .btn-submit {
+    width: 100%;
+    padding: 1rem;
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+
+  .btn-submit:hover {
+    background: var(--primary-dark);
+  }
+
+  .btn-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .form-success {
+    display: none;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .contact-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .stats-bar {
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+    }
+  }
+</style>

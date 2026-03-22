@@ -1,0 +1,280 @@
+<section class="section portfolio" id="realisations">
+  <div class="section-label">Portfolio</div>
+  <h2 class="section-title">Nos réalisations</h2>
+  <p class="section-subtitle">De nombreuses références partout en Wallonie. Découvrez nos projets récents.</p>
+  <div class="filter-buttons">
+    <button class="filter-btn active" data-filter="grosoeuvre">Gros œuvre</button>
+    <button class="filter-btn" data-filter="interieur">Intérieur</button>
+    <button class="filter-btn" data-filter="exterieur">Extérieur</button>
+  </div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="close-lightbox" aria-label="Fermer">&times;</button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Photo précédente">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+  </button>
+  <img src="" alt="Photo agrandie" id="lightboxImg">
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Photo suivante">
+    <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+  </button>
+</div>
+
+<script>
+  const galleryData: Record<string, { src: string; alt: string }[]> = {
+    grosoeuvre: [
+      { src: '/assets/gallery/grosoeuvre/photo.jpg', alt: 'Gros œuvre — maçonnerie' },
+      { src: '/assets/gallery/grosoeuvre/img2.jpg', alt: 'Gros œuvre — armature' },
+      { src: '/assets/gallery/grosoeuvre/facade.jpg', alt: 'Gros œuvre — facade' },
+      { src: '/assets/gallery/grosoeuvre/img.jpg', alt: 'Gros œuvre — construction' },
+      { src: '/assets/grosoeuvre-armature.png', alt: 'Gros œuvre — armature' },
+      { src: '/assets/hero-construction-2.png', alt: 'Gros œuvre — habitation' },
+    ],
+    interieur: [
+      { src: '/assets/gallery/interieur/IMG_0400.jpg', alt: 'Intérieur — rénovation' },
+      { src: '/assets/gallery/interieur/IMG_0401.jpg', alt: 'Intérieur — aménagement' },
+      { src: '/assets/gallery/interieur/IMG_0348.jpg', alt: 'Intérieur — travaux' },
+    ],
+    exterieur: [
+      { src: '/assets/gallery/exterieur/geolam.jpg', alt: 'Extérieur — terrasse bois' },
+      { src: '/assets/gallery/exterieur/terasse.jpg', alt: 'Extérieur — terrasse' },
+      { src: '/assets/gallery/exterieur/12274733_893418817420310_5869049151503074185_n.jpg', alt: 'Extérieur — aménagement' },
+      { src: '/assets/gallery/exterieur/gabions.jpg', alt: 'Extérieur — gabions' },
+      { src: '/assets/gallery/exterieur/12096266_872693866159472_1531582349620197989_n.jpg', alt: 'Extérieur — pavage' },
+    ],
+  };
+
+  let currentFilter = 'grosoeuvre';
+  let lightboxIndex = 0;
+
+  function currentItems() {
+    return galleryData[currentFilter] || [];
+  }
+
+  function renderGallery(filter: string) {
+    const grid = document.getElementById('galleryGrid');
+    if (!grid) return;
+    const items = galleryData[filter] || [];
+    grid.innerHTML = items.map((item, i) =>
+      `<div class="gallery-item" data-index="${i}">
+        <img src="${item.src}" alt="${item.alt}" loading="lazy">
+      </div>`
+    ).join('');
+
+    grid.querySelectorAll('.gallery-item').forEach(el => {
+      el.addEventListener('click', () => {
+        openLightbox(parseInt((el as HTMLElement).dataset.index || '0', 10));
+      });
+    });
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelector('.filter-btn.active')?.classList.remove('active');
+      btn.classList.add('active');
+      currentFilter = (btn as HTMLElement).dataset.filter || 'grosoeuvre';
+      renderGallery(currentFilter);
+    });
+  });
+
+  renderGallery(currentFilter);
+
+  function showImage(index: number) {
+    const items = currentItems();
+    lightboxIndex = (index + items.length) % items.length;
+    const img = document.getElementById('lightboxImg') as HTMLImageElement;
+    if (img) {
+      img.src = items[lightboxIndex].src;
+      img.alt = items[lightboxIndex].alt;
+    }
+  }
+
+  function openLightbox(index: number) {
+    showImage(index);
+    document.getElementById('lightbox')?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox')?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lightboxPrev')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showImage(lightboxIndex - 1);
+  });
+
+  document.getElementById('lightboxNext')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showImage(lightboxIndex + 1);
+  });
+
+  document.getElementById('lightboxImg')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+
+  document.getElementById('lightbox')?.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lightbox');
+    if (!lb?.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showImage(lightboxIndex - 1);
+    if (e.key === 'ArrowRight') showImage(lightboxIndex + 1);
+  });
+</script>
+
+<style>
+  .portfolio {
+    background: var(--white);
+  }
+
+  .filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .filter-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
+  }
+
+  .filter-btn:hover:not(.active) {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  :global(.gallery-item) {
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    cursor: pointer;
+  }
+
+  :global(.gallery-item img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+
+  :global(.gallery-item:hover img) {
+    transform: scale(1.05);
+  }
+
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .lightbox.open {
+    display: flex;
+  }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+
+  .lightbox .close-lightbox {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    line-height: 1;
+    z-index: 2;
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.15);
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    z-index: 2;
+  }
+
+  .lightbox-nav:hover {
+    background: rgba(255,255,255,0.3);
+  }
+
+  .lightbox-nav svg {
+    width: 24px;
+    height: 24px;
+    stroke: white;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .lightbox-prev {
+    left: 1.5rem;
+  }
+
+  .lightbox-next {
+    right: 1.5rem;
+  }
+
+  .lightbox img {
+    cursor: default;
+  }
+
+  @media (max-width: 900px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

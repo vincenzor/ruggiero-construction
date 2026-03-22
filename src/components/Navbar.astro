@@ -1,0 +1,180 @@
+---
+const navLinks = [
+  { href: '#accueil', label: 'Accueil' },
+  { href: '#services', label: 'Services' },
+  { href: '#realisations', label: 'Réalisations' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<nav class="navbar" id="navbar">
+  <a href="#" class="logo">
+    <img src="/assets/logo-white.png" alt="Ruggiero Construction & Rénovation">
+  </a>
+  <ul class="nav-links">
+    {navLinks.map(link => (
+      <li><a href={link.href}>{link.label}</a></li>
+    ))}
+    <li><a href="#contact" class="btn-cta">Devis gratuit</a></li>
+  </ul>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="closeMobileMenu">&times;</button>
+  {navLinks.map(link => (
+    <a href={link.href} class="mobile-link">{link.label}</a>
+  ))}
+  <a href="#contact" class="mobile-link">Devis gratuit</a>
+</div>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  document.getElementById('hamburgerBtn')?.addEventListener('click', () => {
+    document.getElementById('mobileMenu')?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  function closeMobile() {
+    document.getElementById('mobileMenu')?.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('closeMobileMenu')?.addEventListener('click', closeMobile);
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', closeMobile);
+  });
+</script>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: transparent;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .navbar.scrolled {
+    background: var(--nav-bg);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+
+  .navbar .logo img {
+    height: 48px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+
+  .nav-links a:hover {
+    opacity: 1;
+  }
+
+  .nav-links .btn-cta {
+    background: var(--primary);
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    opacity: 1;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .nav-links .btn-cta:hover {
+    background: var(--primary-dark);
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--nav-bg);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .mobile-menu.open {
+    display: flex;
+  }
+
+  .mobile-menu a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .mobile-menu .close-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 1rem 1.5rem;
+    }
+
+    .nav-links {
+      display: none;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+  }
+</style>
