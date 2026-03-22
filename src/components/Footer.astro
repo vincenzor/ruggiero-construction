@@ -21,7 +21,12 @@ const footerLinks = [
     </div>
     <div class="footer-bottom">
       <span>Rue de Rouvroy 287e, 5300 Andenne (Bonneville) — contact@ruggiero-construction.be</span>
-      <span>&copy; {new Date().getFullYear()} Ruggiero Construction. Tous droits réservés.</span>
+      <div class="footer-right">
+        <a href="https://www.facebook.com/RuggieroConstruction/" target="_blank" rel="noopener noreferrer" class="facebook-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+        <span>&copy; {new Date().getFullYear()} Ruggiero Construction. Tous droits réservés.</span>
+      </div>
     </div>
   </div>
 </footer>
@@ -71,9 +76,43 @@ const footerLinks = [
   .footer-bottom {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 0.85rem;
     flex-wrap: wrap;
     gap: 1rem;
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .facebook-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.2s;
+  }
+
+  .facebook-link:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .facebook-link svg {
+    width: 18px;
+    height: 18px;
+    stroke: rgba(255,255,255,0.65);
+    fill: none;
+    stroke-width: 2;
+  }
+
+  .facebook-link:hover svg {
+    stroke: var(--white);
   }
 
   @media (max-width: 768px) {
@@ -95,6 +134,10 @@ const footerLinks = [
     .footer-bottom {
       flex-direction: column;
       text-align: center;
+    }
+
+    .footer-right {
+      justify-content: center;
     }
   }
 </style>
