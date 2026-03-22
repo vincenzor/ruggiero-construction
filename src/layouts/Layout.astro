@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL;
 const siteUrl = import.meta.env.SITE;
 const { title, description, keywords, ogImage } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
-const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).href : new URL(`${base}assets/hero.jpg`, siteUrl).href;
+const ogImageUrl = ogImage ? new URL(ogImage, siteUrl).href : new URL(`${base}assets/og.png`, siteUrl).href;
 ---
 
 <!DOCTYPE html>
