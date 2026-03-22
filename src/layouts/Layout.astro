@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL;
 const siteUrl = import.meta.env.SITE;
 const { title, description, keywords, ogImage } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
-const ogImageUrl = ogImage || 'https://raw.githubusercontent.com/vincenzor/ruggiero-construction/main/public/assets/og.jpg';
+const ogImageUrl = ogImage || 'https://raw.githubusercontent.com/vincenzor/ruggiero-construction/main/public/assets/og.jpg?v=2';
 ---
 
 <!DOCTYPE html>
